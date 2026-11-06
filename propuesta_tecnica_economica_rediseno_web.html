@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta Técnica y Económica - Rediseño & Desarrollo Web B2B</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f4fe',
+                            100: '#dde6fc',
+                            500: '#3b62f6',
+                            600: '#2547eb',
+                            700: '#1d35d8',
+                            900: '#0f172a',
+                        },
+                        tech: {
+                            dark: '#0b0f19',
+                            card: '#111827',
+                            border: '#1f2937',
+                            accent: '#06b6d4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        /* REGLAS ESPECIALES PARA EXPORTACIÓN A PDF Y IMPRESIÓN CONTINUA */
+        @page {
+            size: letter portrait;
+            margin: 12mm 10mm;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: #ffffff !important;
+                color: #0f172a !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* Prevenir saltos dentro de bloques y recuadros */
+            section, 
+            .print-break-inside-prevent, 
+            .p-4, .p-3, 
+            tr, 
+            .rounded-xl, 
+            .rounded-2xl {
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+            }
+
+            /* Evitar que los títulos queden solos al final de una página */
+            h1, h2, h3, h4, .border-b {
+                break-after: avoid !important;
+                page-break-after: avoid !important;
+            }
+
+            /* Ajustes estéticos de sombras y bordes */
+            .shadow-xl, .shadow-md, .shadow-sm {
+                box-shadow: none !important;
+            }
+            .border {
+                border-color: #cbd5e1 !important;
+            }
+            
+            /* Ajuste de márgenes para hojas continuas */
+            main {
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Action Bar (No Print) -->
+    <header class="no-print sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 text-white py-3 px-4 sm:px-8 flex justify-between items-center shadow-lg">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-md">
+                <i data-lucide="code-2" class="w-5 h-5"></i>
+            </div>
+            <span class="font-semibold text-sm sm:text-base tracking-wide text-slate-200">Propuesta Técnica & Económica Integrada</span>
+        </div>
+        <div class="flex items-center gap-3">
+            <button onclick="window.print()" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-sm cursor-pointer">
+                <i data-lucide="printer" class="w-4 h-4"></i>
+                <span>Imprimir / Exportar a PDF (Continuo)</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12 space-y-10">
+
+        <!-- Hero Document Header -->
+        <section class="bg-slate-900 text-white rounded-2xl p-6 sm:p-10 shadow-xl border border-slate-800 relative overflow-hidden print-break-inside-prevent">
+            <!-- Decorative Accent Background -->
+            <div class="absolute -right-16 -top-16 w-64 h-64 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wider uppercase mb-4">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Documento Oficial Completo B2B
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white mb-2">
+                        Rediseño & Desarrollo Web Corporativo
+                    </h1>
+                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl">
+                        Estrategia técnica, estimación de tiempos desglosada, gestión de revisiones y presupuesto económico cerrado con IVA.
+                    </p>
+                </div>
+                <div class="bg-slate-800/80 backdrop-blur border border-slate-700/60 rounded-xl p-4 min-w-[220px] text-right">
+                    <span class="block text-xs uppercase tracking-wider text-slate-400 font-medium">Inversión Final Neto</span>
+                    <span class="text-2xl sm:text-3xl font-extrabold text-blue-400 font-mono">$30,629.80</span>
+                    <span class="block text-xs text-slate-400 mt-1">MXN (IVA Incluido)</span>
+                </div>
+            </div>
+
+            <!-- Key Specs Meta Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800 text-xs sm:text-sm">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-lg bg-slate-800 text-blue-400"><i data-lucide="clock" class="w-4 h-4"></i></div>
+                    <div>
+                        <span class="block text-slate-400 text-xs">Total Horas</span>
+                        <span class="font-semibold text-slate-200">183 Horas</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-lg bg-slate-800 text-blue-400"><i data-lucide="calendar" class="w-4 h-4"></i></div>
+                    <div>
+                        <span class="block text-slate-400 text-xs">Duración</span>
+                        <span class="font-semibold text-slate-200">11.5 Semanas</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-lg bg-slate-800 text-blue-400"><i data-lucide="layers" class="w-4 h-4"></i></div>
+                    <div>
+                        <span class="block text-slate-400 text-xs">Estructura</span>
+                        <span class="font-semibold text-slate-200">11 Secciones + Video</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="p-2 rounded-lg bg-slate-800 text-blue-400"><i data-lucide="credit-card" class="w-4 h-4"></i></div>
+                    <div>
+                        <span class="block text-slate-400 text-xs">Forma de Pago</span>
+                        <span class="font-semibold text-slate-200">5 Hitos Iguales</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Alcance General y Entregables -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6 print-break-inside-prevent">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    1
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Alcance General del Proyecto y Entregables</h2>
+                    <p class="text-sm text-slate-500">Desarrollo integral en entorno de pruebas (Staging) previo al lanzamiento comercial.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Entregable 1 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-blue-200 transition print-break-inside-prevent">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0 mt-0.5"><i data-lucide="map" class="w-5 h-5"></i></div>
+                        <div>
+                            <h3 class="font-semibold text-slate-900 text-base mb-1">1. Customer Journey (Camino del Usuario)</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Mapeo estratégico de las rutas de navegación del usuario enfocado en la generación de prospectos y conversión B2B (contacto directo vía formulario y WhatsApp).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entregable 2 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-blue-200 transition print-break-inside-prevent">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0 mt-0.5"><i data-lucide="sitemap" class="w-5 h-5"></i></div>
+                        <div>
+                            <h3 class="font-semibold text-slate-900 text-base mb-1">2. Arquitectura de la Información</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Validación del mapa del sitio y estructura de contenidos entregados por el cliente, garantizando jerarquía visual, legibilidad e impacto comercial.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entregable 3 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-blue-200 transition print-break-inside-prevent">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0 mt-0.5"><i data-lucide="figma" class="w-5 h-5"></i></div>
+                        <div>
+                            <h3 class="font-semibold text-slate-900 text-base mb-1">3. Diseño UI e Interactivo (Figma)</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed mb-2">
+                                Creación de maquetas de alta fidelidad para escritorio y dispositivos móviles. Se entregará página por página con flujo formal de revisión dividida en 3 fases estructuradas:
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entregable 4 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-blue-200 transition print-break-inside-prevent">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0 mt-0.5"><i data-lucide="server" class="w-5 h-5"></i></div>
+                        <div>
+                            <h3 class="font-semibold text-slate-900 text-base mb-1">4. Desarrollo WordPress (Staging)</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Implementación técnica en WordPress utilizando estándares de código limpio, alto rendimiento y seguridad sin costos recurrentes de licenciamiento.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entregable 5 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-blue-200 transition print-break-inside-prevent">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0 mt-0.5"><i data-lucide="video" class="w-5 h-5"></i></div>
+                        <div>
+                            <h3 class="font-semibold text-slate-900 text-base mb-1">5. Video Promocional Hero (15-30s)</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Producción de un video promocional corto (15 a 30 segundos) compuesto por clips de stock HD, texto animado e identidad visual de la empresa, incluyendo 2 rondas de revisión de contenido/edición dentro del tiempo asignado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entregable 6 -->
+                <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-blue-200 transition print-break-inside-prevent">
+                    <div class="flex items-start gap-3">
+                        <div class="p-2 bg-blue-100 text-blue-700 rounded-lg shrink-0 mt-0.5"><i data-lucide="search-code" class="w-5 h-5"></i></div>
+                        <div>
+                            <h3 class="font-semibold text-slate-900 text-base mb-1">6. SEO On-Page & Capacitación</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Configuración de estructura de encabezados (H1, H2, H3), meta-etiquetas, compresión de imágenes con atributos ALT, alta en Google Search Console y entrega de videos explicativos grabados para la administración autónoma.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Cotización y Desglose de Tiempos -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-8 print-break-inside-prevent">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-100 pb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                        2
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900">Cotización y Desglose de Tiempos</h2>
+                        <p class="text-sm text-slate-500">Tarifa base pactada: <span class="font-semibold text-slate-800">$135.00 MXN / Hora</span></p>
+                    </div>
+                </div>
+                <div class="px-3 py-1 bg-slate-100 text-slate-700 rounded-lg text-xs font-medium">
+                    Mano de obra total: 183 Horas
+                </div>
+            </div>
+
+            <!-- Estrategia Inicial -->
+            <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-100 flex justify-between items-center text-sm print-break-inside-prevent">
+                <div>
+                    <span class="font-semibold text-slate-900">A. Estrategia Inicial (Entregables Conjuntos)</span>
+                    <p class="text-xs text-slate-600">Customer Journey + Auditoría de Arquitectura de Información entregada</p>
+                </div>
+                <span class="font-mono font-bold text-blue-700">10 hrs ($1,350.00 MXN)</span>
+            </div>
+
+            <p class="text-xs text-slate-500 italic bg-slate-50 p-3 rounded-lg border border-slate-100 print-break-inside-prevent">
+                *Nota: Se incluye una media moderada de 2 a 4 horas por sección dedicadas exclusivamente al procesamiento de revisiones y ajustes finos, divididas exactamente entre las 3 fases de revisión (Revisión 1 escrita + ajustes, Revisión 2 por llamada + ajustes, y Revisión 3 final + cierre).
+            </p>
+
+            <!-- Tabla de secciones -->
+            <div class="overflow-x-auto rounded-xl border border-slate-200 print-break-inside-prevent text-base">
+                <table class="w-full text-left border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-slate-900 text-slate-200">
+                            <th class="p-3 sm:p-2 font-semibold">Sección Web</th>
+                            <th class="p-3 sm:p-2 font-semibold">Complejidad</th>
+                            <th class="p-3 sm:p-2 font-semibold text-center">Horas UI (Figma)</th>
+                            <th class="p-3 sm:p-2 font-semibold text-center">Horas Revisiones (3 Fases)</th>
+                            <th class="p-3 sm:p-2 font-semibold text-center">Horas Código</th>
+                            <th class="p-3 sm:p-2 font-semibold text-center">Total Horas</th>
+                            <th class="p-3 sm:p-2 font-semibold text-right">Costo (MXN)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-200 bg-white text-xs sm:text-sm">
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Inicio (Home)</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">Alta</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">10 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">4 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 1.5h | Rev 2: 1.5h | Rev 3: 1h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">12 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">26 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$3,510.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Category Management</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">Alta</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 1h | Rev 2: 1h | Rev 3: 1h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">15 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$2,025.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Big Data</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">Alta</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 1h | Rev 2: 1h | Rev 3: 1h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">15 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$2,025.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Mercadotecnia</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">Alta</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 1h | Rev 2: 1h | Rev 3: 1h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">15 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$2,025.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Trademarketing</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">Alta</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 1h | Rev 2: 1h | Rev 3: 1h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">15 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$2,025.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Workshops</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-800">Alta</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 1h | Rev 2: 1h | Rev 3: 1h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">6 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">15 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$2,025.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Nosotros</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700">Estándar</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">2 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 0.7h | Rev 2: 0.7h | Rev 3: 0.6h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">8 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$1,080.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Alianzas</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700">Estándar</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">2 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 0.7h | Rev 2: 0.7h | Rev 3: 0.6h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">8 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$1,080.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Blog (Listado y Estructura)</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700">Estándar</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">2 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 0.7h | Rev 2: 0.7h | Rev 3: 0.6h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">8 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$1,080.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Contacto</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700">Estándar</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">2 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 0.7h | Rev 2: 0.7h | Rev 3: 0.6h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">3 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">8 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$1,080.00</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50/80 print-break-inside-prevent">
+                            <td class="p-3 sm:p-2 font-medium text-slate-900">Servicios (Página Hub)</td>
+                            <td class="p-3 sm:p-2"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-slate-100 text-slate-700">Estándar</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">4 hrs</td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">2 hrs <span class="block text-[10px] text-slate-400">(Rev 1: 0.7h | Rev 2: 0.7h | Rev 3: 0.6h)</span></td>
+                            <td class="p-3 sm:p-2 text-center text-slate-600">4 hrs</td>
+                            <td class="p-3 sm:p-2 text-center font-semibold text-slate-900">10 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono font-medium text-slate-800">$1,350.00</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="bg-slate-100 border-t-2 border-slate-300 text-slate-900 font-semibold print-break-inside-prevent">
+                            <td colspan="5" class="p-3 sm:p-2 text-right">Subtotal 11 Secciones Principales (Incluye 3 Revisiones c/u):</td>
+                            <td class="p-3 sm:p-2 text-center text-blue-700 font-bold">143 hrs</td>
+                            <td class="p-3 sm:p-2 text-right font-mono text-blue-700 font-bold">$19,305.00</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Adicionales y Producción -->
+            <div class="space-y-4 print-break-inside-prevent">
+                <h3 class="font-bold text-slate-900 text-base">C. Producción Multimedia, Optimización y Cierre</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                    <div class="flex justify-between items-center p-3 rounded-lg border border-slate-200 bg-slate-50">
+                        <span class="text-slate-700 font-medium">Producción de Video Inicial (Guion + Montaje Canva/Stock HD + 2 Revisiones)</span>
+                        <span class="font-mono font-semibold text-slate-900">12 hrs ($1,620.00)</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 rounded-lg border border-slate-200 bg-slate-50">
+                        <span class="text-slate-700 font-medium">SEO On-Page + Optimización de Carga (PageSpeed)</span>
+                        <span class="font-mono font-semibold text-slate-900">8 hrs ($1,080.00)</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 rounded-lg border border-slate-200 bg-slate-50">
+                        <span class="text-slate-700 font-medium">Pruebas de Calidad (QA) + Migración de Staging a Producción</span>
+                        <span class="font-mono font-semibold text-slate-900">6 hrs ($810.00)</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 rounded-lg border border-slate-200 bg-slate-50">
+                        <span class="text-slate-700 font-medium">Capacitación en Videos Grabados + Documentación</span>
+                        <span class="font-mono font-semibold text-slate-900">4 hrs ($540.00)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insumos y alternativas -->
+            <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3 print-break-inside-prevent">
+                <h3 class="font-bold text-slate-900 text-sm">E. Costo de Insumos Compartidos, Licencias y Fondos de Contingencia</h3>
+                <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                    <li><strong>Fondo de Insumos Compartidos ($500.00 MXN):</strong> Se fija este monto para cubrir licencias de recursos gráficos/video de stock y cualquier plugin puntual de pago.</li>
+                    <li><strong>Plantilla / Theme Premium ($1,200.00 MXN / ~$59-$69 USD):</strong> Se seleccionará junto con el cliente según las necesidades visuales aprobadas. Costo único.</li>
+                    <li><strong>Subtotal Insumos Fijos:</strong> $1,700.00 MXN</li>
+                </ul>
+
+                <h4 class="font-semibold text-slate-800 text-xs pt-2 border-t border-slate-200">F. Alternativas Económicas / Gratuitas Recomendadas:</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600">
+                    <div>• <strong>Maquetación:</strong> Elementor (Gratis) + Unlimited Elements</div>
+                    <div>• <strong>Cookies & RGPD:</strong> Complianz GDPR / Cookie Notice (Gratis)</div>
+                    <div>• <strong>SEO On-Page:</strong> Rank Math SEO (Gratis)</div>
+                    <div>• <strong>Seguridad:</strong> Wordfence Security (Gratis)</div>
+                    <div>• <strong>Respaldos:</strong> UpdraftPlus (Gratis a Google Drive)</div>
+                    <div>• <strong>Formularios:</strong> Fluent Forms / WPForms (Gratis)</div>
+                    <div>• <strong>Alojamiento Video:</strong> Subida directa (.mp4 comprimido &lt; 5MB)</div>
+                    <div>• <strong>Hosting/Dominio:</strong> Propiedad del cliente</div>
+                </div>
+            </div>
+
+            <!-- Resumen Financiero Total con IVA -->
+            <div class="bg-slate-900 text-white rounded-xl p-6 space-y-4 print-break-inside-prevent">
+                <h3 class="text-lg font-bold border-b border-slate-800 pb-3 flex items-center justify-between">
+                    <span>G. INVERSIÓN FINAL TOTAL DEL PROYECTO</span>
+                    <span class="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2.5 py-1 rounded-full">Con Facturación / IVA</span>
+                </h3>
+                
+                <div class="space-y-2 text-sm text-slate-300 font-mono">
+                    <div class="flex justify-between">
+                        <span>Mano de Obra Total (183 hrs)</span>
+                        <span>$24,705.00 MXN</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Fondo de Insumos y Plantilla Premium</span>
+                        <span>$1,700.00 MXN</span>
+                    </div>
+                    <div class="flex justify-between pt-2 border-t border-slate-800 text-base font-semibold text-white">
+                        <span>Subtotal Sin Impuestos</span>
+                        <span>$26,405.00 MXN</span>
+                    </div>
+                    <div class="flex justify-between text-slate-400">
+                        <span>IVA (16%)</span>
+                        <span>$4,224.80 MXN</span>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <span class="text-xs text-slate-400 uppercase tracking-wider block">Total Final Neto (con Factura)</span>
+                        <span class="text-2xl sm:text-3xl font-extrabold text-blue-400 font-mono">$30,629.80 MXN</span>
+                    </div>
+                    <div class="text-xs text-slate-400 max-w-xs text-left sm:text-right">
+                        <span class="font-semibold text-slate-200">H. Adicional Opcional:</span> Costo por Subsección Individual de Servicio = 2 hrs UI + 1 hr Revisión + 2 hrs Maquetación = <strong>5 hrs totales ($675.00 MXN + IVA por subsección)</strong>.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Cronograma de Trabajo -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6 print-break-inside-prevent">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    3
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Cronograma Semanal de Trabajo (16 hrs/semana)</h2>
+                    <p class="text-sm text-slate-500">Capacidad semanal: 16 Horas | Duración estimada: 11.5 Semanas (2.8 Meses aprox.) | Fecha de Inicio: Lunes 16 de Noviembre</p>
+                </div>
+            </div>
+
+            <div class="relative border-l-2 border-slate-200 ml-4 space-y-6 pl-6 py-2">
+
+                <!-- Semana 1 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 1: 16 Nov - 22 Nov]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Customer Journey + Auditoría de Arquitectura de Información: 10 hrs</li>
+                            <li>Guion, concepto y selección de assets para Video Inicial (Hero): 6 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 2 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 2: 23 Nov - 29 Nov]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Montaje y edición de Video Inicial (Canva / Stock HD): 4 hrs</li>
+                            <li>Video Inicial - Revisión 1 (Ajustes de edición y texto por escrito): 1 hr</li>
+                            <li>Video Inicial - Revisión 2 (Ajustes finales de ritmo/duración y aprobación de video): 1 hr *(Completa las 12 hrs del video)*</li>
+                            <li>Diseño UI en Figma - Inicio (Home): 10 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 3 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 3: 30 Nov - 06 Dic]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Home - Revisión 1: 1.5 hrs *(Recepción de observaciones escritas y corrección inicial)*</li>
+                            <li>Home - Revisión 2: 1.5 hrs *(Llamada de entrega y revisión en vivo + corrección)*</li>
+                            <li>Home - Revisión 3: 1.0 hr *(Verificación final y cierre de maqueta Home)* *(Completa 4 hrs de revisión)*</li>
+                            <li>Diseño UI en Figma - Category Management: 6 hrs</li>
+                            <li>Diseño UI en Figma - Big Data: 6 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 4 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 4: 07 Dic - 13 Dic]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Category Management - Fases de Revisión (3 hrs totales: Rev 1 1.0h, Rev 2 1.0h, Rev 3 1.0h)</li>
+                            <li>Big Data - Fases de Revisión (3 hrs totales: Rev 1 1.0h, Rev 2 1.0h, Rev 3 1.0h)</li>
+                            <li>Diseño UI en Figma - Mercadotecnia: 6 hrs</li>
+                            <li>Diseño UI en Figma - Trademarketing: 4 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 5 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 5: 14 Dic - 20 Dic]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Diseño UI en Figma - Trademarketing (conclusión): 2 hrs *(Completa las 6 hrs de UI)*</li>
+                            <li>Mercadotecnia - Fases de Revisión (3 hrs totales: Rev 1 1.0h, Rev 2 1.0h, Rev 3 1.0h)</li>
+                            <li>Trademarketing - Fases de Revisión (3 hrs totales: Rev 1 1.0h, Rev 2 1.0h, Rev 3 1.0h)</li>
+                            <li>Diseño UI en Figma - Workshops: 6 hrs</li>
+                            <li>Workshops - Rev 1: 2.0 hrs *(Recepción de observaciones escritas y corrección inicial)*</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 6 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 6: 21 Dic - 27 Dic]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Workshops - Fases de Revisión Restantes: Rev 2 0.5h, Rev 3 0.5h *(Completa las 3 hrs)*</li>
+                            <li>Diseño UI en Figma - Servicios (Página Hub): 4 hrs</li>
+                            <li>Diseño UI en Figma - Nosotros: 3 hrs</li>
+                            <li>Diseño UI en Figma - Alianzas: 3 hrs</li>
+                            <li>Diseño UI en Figma - Blog (Listado y Estructura): 3 hrs</li>
+                            <li>Diseño UI en Figma - Contacto (inicio): 2 hrs *(De 3 hrs asignadas)*</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 7 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 7: 28 Dic - 03 Ene]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Diseño UI en Figma - Contacto (conclusión): 1 hr *(Concluye 100% bocetos UI)*</li>
+                            <li>Servicios - Rev 1 (0.7h) + Rev 2 por llamada (0.7h) + Rev 3 cierre (0.6h): 2 hrs</li>
+                            <li>Nosotros - Rev 1 (0.7h) + Rev 2 por llamada (0.7h) + Rev 3 cierre (0.6h): 2 hrs</li>
+                            <li>Alianzas - Rev 1 (0.7h) + Rev 2 por llamada (0.7h) + Rev 3 cierre (0.6h): 2 hrs</li>
+                            <li>Blog - Rev 1 (0.7h) + Rev 2 por llamada (0.7h) + Rev 3 cierre (0.6h): 2 hrs</li>
+                            <li>Contacto - Rev 1 (0.7h) + Rev 2 por llamada (0.7h) + Rev 3 cierre (0.6h): 2 hrs *(Concluye 100% de revisiones UI)*</li>
+                            <li>Maquetación en Staging (WordPress) - Inicio (Home): 5 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 8 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 8: 04 Ene - 10 Ene]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Maquetación en Staging - Inicio (Home) (conclusión): 7 hrs *(Completa las 12 hrs)*</li>
+                            <li>Maquetación en Staging - Category Management: 6 hrs</li>
+                            <li>Maquetación en Staging - Big Data (inicio): 3 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 9 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 9: 11 Ene - 17 Ene]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Maquetación en Staging - Big Data (conclusión): 3 hrs *(Completa las 6 hrs)*</li>
+                            <li>Maquetación en Staging - Mercadotecnia: 6 hrs</li>
+                            <li>Maquetación en Staging - Trademarketing: 6 hrs</li>
+                            <li>Maquetación en Staging - Workshops (inicio): 1 hr</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 10 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 10: 18 Ene - 24 Ene]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Maquetación en Staging - Workshops (conclusión): 5 hrs *(Completa las 6 hrs)*</li>
+                            <li>Maquetación en Staging - Servicios (Página Hub): 4 hrs</li>
+                            <li>Maquetación en Staging - Nosotros: 3 hrs</li>
+                            <li>Maquetación en Staging - Alianzas: 3 hrs</li>
+                            <li>Maquetación en Staging - Blog (Listado y Estructura) (inicio): 1 hr</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 11 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-blue-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 11: 25 Ene - 31 Ene]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-semibold">16 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Maquetación en Staging - Blog (conclusión): 2 hrs *(Completa las 3 hrs)*</li>
+                            <li>Maquetación en Staging - Contacto: 3 hrs *(Concluye 100% maquetación en Staging)*</li>
+                            <li>SEO On-Page Técnico (Títulos, Metas, Alt Tags, Encabezados): 8 hrs</li>
+                            <li>Pruebas QA, Velocidad y Adaptabilidad Móvil (inicio): 3 hrs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Semana 12 -->
+                <div class="relative print-break-inside-prevent">
+                    <div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-emerald-600 border-4 border-white shadow"></div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/80">
+                        <div class="flex justify-between items-center mb-1">
+                            <h3 class="font-bold text-slate-900 text-sm">[Semana 12 (Media Semana): 01 Feb - 05 Feb]</h3>
+                            <span class="text-xs px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">7 hrs</span>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside">
+                            <li>Pruebas QA, Velocidad y Migración a Producción (conclusión): 3 hrs *(Completa las 6 hrs)*</li>
+                            <li>Capacitación mediante Videos Grabados y Documentación: 2 hrs *(De 4 hrs asignadas)*</li>
+                            <li>Grabación final de capacitación restante (2 hrs) y Firma del Acta de Aceptación Definitiva.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 4: Criterios de Entrega de Contenidos -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-4 print-break-inside-prevent">
+            <h3 class="font-bold text-slate-900 text-base border-b border-slate-100 pb-3 flex items-center gap-2">
+                <i data-lucide="file-check" class="w-5 h-5 text-blue-600"></i> 4. Criterios de Entrega de Contenidos por el Cliente
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600">
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">
+                    <strong>1. Textos Definitivos:</strong> Entregados en un documento limpio organizados por página.
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">
+                    <strong>2. Logotipos:</strong> Formato vectorial (.SVG o .AI) o PNG transparente en alta resolución.
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">
+                    <strong>3. Imágenes Propias:</strong> Resolución mínima de 1920px de ancho. Excluidas capturas de pantalla de celular o imágenes borrosas.
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">
+                    <strong>4. Estructura Clara:</strong> Indicación clara de Titular Principal (H1), Subtítulos (H2/H3) y botones (CTA).
+                </div>
+                <div class="p-3 rounded-lg bg-slate-50 border border-slate-100 sm:col-span-2 print-break-inside-prevent">
+                    <strong>5. Derechos de Autor:</strong> Licencias activas para uso comercial de imágenes provistas por el cliente.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Forma de Trabajo y Gestión de Cambios -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6 print-break-inside-prevent">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    5
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Forma de Trabajo y Gestión de Cambios</h2>
+                    <p class="text-sm text-slate-500">Transparencia en el flujo de revisiones y criterios de ajuste.</p>
+                </div>
+            </div>
+
+            <!-- Flujo gráfico -->
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center space-y-2 print-break-inside-prevent">
+                <span class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Flujo de Revisión de 3 Fases Estructuradas por Página</span>
+                <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-mono pt-2">
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-blue-400 border border-slate-700">Entrega UI Figma</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700">Rev 1: Ajustes Escritos</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 border border-slate-700">Rev 2: Llamada en Vivo</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4 text-slate-500"></i>
+                    <span class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold">Rev 3: Cierre y Firma</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                <!-- Cambios Incluidos -->
+                <div class="space-y-3 print-break-inside-prevent">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2 text-emerald-700">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i> Cambios Incluidos en la Propuesta
+                    </h3>
+                    <ul class="text-xs text-slate-600 space-y-2">
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Ajustes visuales menores:</strong> Modificaciones de alineación, tipos de letra, tamaños de texto o tonos de la paleta de colores dentro de la identidad de la marca.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Reorganización ligera de bloques:</strong> Ajuste en el orden vertical de secciones dentro de una misma maqueta antes de su aprobación final.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Sustitución de imágenes de stock:</strong> Cambio de fotografías o ilustraciones por alternativas equivalentes dentro del catálogo de recursos.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Correcciones de texto menores:</strong> Ajustes de ortografía, puntuación o ligeras modificaciones de redacción en los bloques maquetados.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Cambios con Costo Adicional -->
+                <div class="space-y-3 print-break-inside-prevent">
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2 text-amber-700">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i> Cambios con Costo Adicional ($135.00 MXN + IVA / hr)
+                    </h3>
+                    <ul class="text-xs text-slate-600 space-y-2">
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Reestructuración de páginas ya aprobadas:</strong> Solicitud de cambios en la arquitectura, disposición o elementos visuales de maquetas que ya hayan completado su fase de Revisión 3 y cuenten con visto bueno por escrito.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Reescritura total o cambio de enfoque de contenidos:</strong> Modificaciones sustanciales a los textos originales o al modelo de negocio una vez entregada la información inicial.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Incorporación de nuevas secciones no contempladas:</strong> Solicitud de páginas adicionales fuera de las 11 secciones principales cotizadas (éstas se cotizarán a la tarifa de subsección correspondiente).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0"></span>
+                            <span><strong>Observaciones enviadas a "cuentagotas":</strong> Cambios solicitados fuera del canal estructurado y de las 3 rondas estipuladas por sección, interrumpiendo el flujo regular de desarrollo.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Esquema de Pagos por Hitos -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-6 print-break-inside-prevent">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    6
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Esquema de Pagos por Hitos (5 Exhibiciones Iguales)</h2>
+                    <p class="text-sm text-slate-500">Distribución exacta prorrateando el 20% de insumos ($340 MXN + IVA) y 20% de mano de obra ($4,941 MXN + IVA).</p>
+                </div>
+            </div>
+
+            <p class="text-xs text-slate-600 leading-relaxed">
+                El monto total neto del proyecto facturado (<strong>$30,629.80 MXN con IVA</strong>) se distribuye en 5 pagos exactos de <strong>$6,125.96 MXN (IVA incluido)</strong> cada uno:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div class="p-3 rounded-xl border border-blue-200 bg-blue-50/40 flex flex-col justify-between print-break-inside-prevent">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-blue-600 tracking-wider">Hito 1</span>
+                        <h4 class="font-bold text-slate-900 text-xs mt-1">Pago 1: Anticipo de Inicio</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 leading-normal">Habilita la plantilla premium, insumos y el arranque oficial (Customer Journey y Auditoría).</p>
+                    </div>
+                    <span class="text-sm font-mono font-bold text-blue-700 mt-3 pt-2 border-t border-blue-100">$6,125.96</span>
+                </div>
+
+                <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between print-break-inside-prevent">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Hito 2</span>
+                        <h4 class="font-bold text-slate-900 text-xs mt-1">Pago 2: Home + 2 Servicios</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 leading-normal">Se liquida al aprobar el diseño UI del Home y las 2 páginas principales de servicio.</p>
+                    </div>
+                    <span class="text-sm font-mono font-bold text-slate-800 mt-3 pt-2 border-t border-slate-200">$6,125.96</span>
+                </div>
+
+                <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between print-break-inside-prevent">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Hito 3</span>
+                        <h4 class="font-bold text-slate-900 text-xs mt-1">Pago 3: 50% Diseños UI</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 leading-normal">Se liquida al aprobar la mitad de los bocetos de las secciones secundarias en Figma.</p>
+                    </div>
+                    <span class="text-sm font-mono font-bold text-slate-800 mt-3 pt-2 border-t border-slate-200">$6,125.96</span>
+                </div>
+
+                <div class="p-3 rounded-xl border border-slate-200 bg-slate-50/50 flex flex-col justify-between print-break-inside-prevent">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Hito 4</span>
+                        <h4 class="font-bold text-slate-900 text-xs mt-1">Pago 4: 100% Diseños UI</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 leading-normal">Se liquida al aprobar la totalidad de maquetas en Figma previo al desarrollo en Staging.</p>
+                    </div>
+                    <span class="text-sm font-mono font-bold text-slate-800 mt-3 pt-2 border-t border-slate-200">$6,125.96</span>
+                </div>
+
+                <div class="p-3 rounded-xl border border-emerald-200 bg-emerald-50/40 flex flex-col justify-between print-break-inside-prevent">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider">Hito 5</span>
+                        <h4 class="font-bold text-slate-900 text-xs mt-1">Pago 5: Finiquito & Cierre</h4>
+                        <p class="text-[11px] text-slate-500 mt-1 leading-normal">Se liquida al concluir Staging, QA, migración a producción, capacitaciones y firma de Acta.</p>
+                    </div>
+                    <span class="text-sm font-mono font-bold text-emerald-700 mt-3 pt-2 border-t border-emerald-100">$6,125.96</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Criterios de Aceptación y Cierre del Proyecto -->
+        <section class="bg-white rounded-xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-4 print-break-inside-prevent">
+            <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    7
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-900">Criterios de Aceptación y Cierre del Proyecto</h2>
+                    <p class="text-sm text-slate-500">Lista formal de verificación para la entrega definitiva del sitio web.</p>
+                </div>
+            </div>
+
+            <ol class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700 list-decimal list-inside">
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Despliegue del 100% de las secciones en el servidor definitivo de producción.</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Correcta visualización y adaptabilidad móvil en escritorios, tabletas y celulares (Pruebas QA).</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Recepción exitosa de correos de prueba desde los formularios de contacto y enlace directo a WhatsApp.</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Reproducción fluida del video en el banner inicial (Hero Banner) alojado directamente en el hosting.</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Programación de copias de seguridad automáticas con UpdraftPlus.</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Banner de consentimiento de Cookies activo (Complianz / Cookie Notice).</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Alta e indexación confirmada en Google Search Console.</li>
+                <li class="p-3 rounded-lg bg-slate-50 border border-slate-100 print-break-inside-prevent">Entrega de los videos grabados de capacitación para la gestión del sitio.</li>
+                <li class="p-3 rounded-lg bg-blue-50 border border-blue-200 sm:col-span-2 font-semibold text-blue-900 print-break-inside-prevent">9. Firma digital o física del Documento / Acta de Aceptación Definitiva del Proyecto.</li>
+            </ol>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-slate-400 py-6 border-t border-slate-200 print-break-inside-prevent">
+            <p>Propuesta Técnica y Económica para Desarrollo Web Corporativo B2B | Documento confidencial elaborado para evaluación del cliente.</p>
+        </footer>
+
+    </main>
+
+    <!-- Lucide Icon Initialization -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
